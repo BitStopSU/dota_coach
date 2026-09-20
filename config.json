@@ -1,0 +1,54 @@
+{
+  "overlay": {
+    "x": 2058,
+    "y": 152,
+    "width": 420,
+    "height": 600,
+    "opacity": 0.85,
+    "font_size": 10,
+    "enabled": true
+  },
+  "purchase_window": {
+    "x": 50,
+    "y": 400,
+    "width": 440,
+    "height": 600,
+    "opacity": 0.85,
+    "enabled": true
+  },
+  "kda_window": {
+    "x": 1000,
+    "y": 400,
+    "width": 500,
+    "height": 460,
+    "opacity": 0.9,
+    "enabled": true
+  },
+  "blocks": {
+    "timings": true,
+    "threats": true,
+    "general": true
+  },
+  "tts": {
+    "enabled": true,
+    "volume": 0.9,
+    "rate": 180
+  },
+  "hotkeys": {
+    "menu_key": "delete",
+    "overlay_key": "f5",
+    "purchase_key": "f6",
+    "kda_key": "f7",
+    "analysis_key": "f8"
+  },
+  "ai": {
+    "provider": "deepseek",
+    "deepseek_api_key": "sk-aef10865c1e54bb8b6f54cba1aca27b2",
+    "deepseek_model": "deepseek-chat",
+    "deepseek_base_url": "https://api.deepseek.com",
+    "gemini_api_key": "",
+    "gemini_model": "gemini-2.0-flash",
+    "language": "ru",
+    "auto_analyze_on_match_end": false
+  }
+}

@@ -1,0 +1,6 @@
+flask
+requests
+PyQt5
+pyttsx3
+keyboard
+openai
