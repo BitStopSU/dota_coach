@@ -22,3 +22,84 @@
 ```bash
 git clone https://github.com/ТВО_ИМЯ/dota_coach.git
 cd dota_coach
+2. Создай виртуальное окружение
+python -m venv .venv
+.venv\Scripts\activate    # Windows
+source .venv/bin/activate  # Linux/Mac
+3. Установи зависимости
+python -m pip install -r requirements.txt
+4. Настрой GSI в Dota 2
+Скопируй gamestate_integration_coach.cfg в:
+Steam/steamapps/common/dota 2 beta/game/dota/cfg/gamestate_integration/
+
+И добавь в параметры запуска Dota 2 (Steam → Свойства → Параметры запуска):
+-gamestateintegration
+
+5. Настрой API-ключ DeepSeek (для ИИ-анализа)
+Скопируй config.example.json в config.json и вставь свой ключ:
+"ai": {
+    "deepseek_api_key": "sk-твой-ключ"
+}
+Ключ можно получить бесплатно на platform.deepseek.com.
+
+6. Запусти
+python main.py
+
+
+⌨️ Горячие клавиши
+Клавиша	Действие
+Del	Открыть/закрыть меню
+F5	Оверлей подсказок
+F6	Лог покупок
+F7	KDA-таблица
+F8	ИИ-анализ матча
+Все хоткеи настраиваются в меню (раздел «Хоткеи»).
+
+
+dota_coach/
+├── main.py                  # Точка входа
+├── gsi_server.py            # Приём данных от Dota 2
+├── rules.py                 # Правила подсказок
+├── overlay.py               # Окно подсказок
+├── purchase_log.py          # Логика лога покупок
+├── purchase_window.py       # Окно лога покупок
+├── kda_tracker.py           # Логика KDA
+├── kda_window.py            # Окно KDA
+├── menu_window.py           # Единое меню
+├── analysis_window.py       # Окно ИИ-анализа
+├── match_analyzer.py        # Сбор данных + промпт
+├── ai_provider.py           # Обёртка над LLM
+├── enemy_analyzer.py        # Анализ врагов
+├── counter_predictor.py     # Прогноз контр-предметов
+├── item_timings.py          # Тайминги
+├── hero_builds.py           # База билдов
+├── neutral_items.py         # Нейтральные предметы
+├── starting_items.py        # Стартовые закупы
+├── dota_images.py           # Загрузка иконок
+├── patch_checker.py         # Проверка патча
+├── match_logger.py          # Логирование
+├── tts.py                   # Озвучка
+└── settings.py              # Настройки
+
+⚠️ Ограничения (важно понимать)
+В обычной игре GSI отдаёт только твои данные. Информация о других 9 игроках появляется только в режиме наблюдателя (DotaTV). Это ограничение Valve, обойти без читов нельзя.
+
+Проект не нарушает правил Valve. Используется официальный API — Game State Integration.
+
+Автоспам в чат запрещён. Оверлей только показывает информацию.
+
+API-ключ DeepSeek не коммитится в git. Хранится в config.json (в .gitignore).
+
+
+🛡 Безопасность
+Проект не:
+
+читает память игры
+
+анализирует экран
+
+отправляет сообщения в чат автоматически
+
+вмешивается в процесс Dota 2
+
+Только чтение GSI + отрисовка своего окна поверх игры — как Discord или Steam Overlay.
