@@ -6,6 +6,8 @@
 ## ✨ Возможности
 
 - **⏱ Тайминги предметов** — подсказки, когда покупать ключевые предметы (Arcane Boots, Blink, Aghanim's)
+- **🔔 Тайминги игровых событий** — напоминания о рунах богатства, силы и мудрости, а также о новых тирах нейтральных предметов
+- **🧠 Помощник драфта** — ручной выбор героев команд и рекомендации контрпиков по статистике OpenDota и встроенной базе
 - **⚔ Анализ угроз врага** — что собирает враг и чем это контрить
 - **🎁 Нейтральные предметы** — советы по артефактам и чарам для текущего тира
 - **📦 Лог покупок** — кто что купил (в реальном времени)
@@ -20,7 +22,7 @@
 ### 1. Клонируй репозиторий
 
 ```bash
-git clone https://github.com/ТВО_ИМЯ/dota_coach.git
+git clone https://github.com/BitStopSU/dota_coach.git
 cd dota_coach
 2. Создай виртуальное окружение
 python -m venv .venv
@@ -36,7 +38,7 @@ Steam/steamapps/common/dota 2 beta/game/dota/cfg/gamestate_integration/
 -gamestateintegration
 
 5. Настрой API-ключ DeepSeek (для ИИ-анализа)
-Скопируй config.example.json в config.json и вставь свой ключ:
+Скопируй `config.example.json` в `config.json` и вставь свой ключ:
 "ai": {
     "deepseek_api_key": "sk-твой-ключ"
 }
@@ -72,6 +74,9 @@ dota_coach/
 ├── enemy_analyzer.py        # Анализ врагов
 ├── counter_predictor.py     # Прогноз контр-предметов
 ├── item_timings.py          # Тайминги
+├── game_events.py           # Тайминги игровых событий
+├── draft_advisor.py         # Статистика матчапов и контрпики
+├── draft_window.py          # Окно помощника драфта
 ├── hero_builds.py           # База билдов
 ├── neutral_items.py         # Нейтральные предметы
 ├── starting_items.py        # Стартовые закупы

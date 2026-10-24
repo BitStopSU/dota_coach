@@ -8,6 +8,8 @@ import gsi_server
 import rules
 import dota_images
 import settings
+import tts
+import game_events
 
 
 class Overlay(QWidget):
@@ -62,6 +64,13 @@ class Overlay(QWidget):
         self.timings_box.setSpacing(2)
         outer.addLayout(self.timings_box)
 
+        self.events_label = QLabel("")
+        self.events_label.setFont(QFont("Consolas", self._font_size))
+        self.events_label.setStyleSheet("color: #F9E79F;")
+        self.events_label.setWordWrap(True)
+        self.events_label.setTextFormat(Qt.RichText)
+        outer.addWidget(self.events_label)
+
         # Угрозы
         self.threats_label = QLabel("")
         self.threats_label.setFont(QFont("Consolas", self._font_size))
@@ -88,6 +97,7 @@ class Overlay(QWidget):
 
         # Список виджетов-строк таймингов для очистки
         self._timing_widgets = []
+        self._game_event_tracker = game_events.GameEventTracker()
 
         # Перетаскивание окна
         self.drag_pos = None
@@ -204,11 +214,40 @@ class Overlay(QWidget):
             self.header.setText("Ожидание Dota 2...")
             self._clear_timings()
             self.timings_title.setText("")
+            self.events_label.setText("")
             self.threats_label.setText("")
             self.general_label.setText("")
+            self._game_event_tracker.reset()
             return
 
         clock = state.get("map", {}).get("clock_time", 0) or 0
+        events_due = self._game_event_tracker.update(clock)
+        if blk.get("game_events", True):
+            for event in events_due:
+                tts.say(
+                    "Наступает тайминг: " + ", ".join(event["labels"]),
+                    key=f"game_event_{event['time']}",
+                    cooldown=1,
+                )
+
+        if blk.get("game_events", True):
+            reminders = game_events.upcoming_events(clock)
+            if reminders:
+                lines = [
+                    f"Через {event['seconds_until'] // 60:02d}:"
+                    f"{event['seconds_until'] % 60:02d} — "
+                    f"{', '.join(event['labels'])}"
+                    for event in reminders
+                ]
+                self.events_label.setText(
+                    '<span style="font-weight: bold;">⚡ Игровые события</span><br>'
+                    + "<br>".join(lines)
+                )
+            else:
+                self.events_label.setText("")
+        else:
+            self.events_label.setText("")
+
         minutes = clock // 60
         seconds = clock % 60
 

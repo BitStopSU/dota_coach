@@ -12,6 +12,7 @@ from purchase_window import PurchaseWindow
 from settings_window import SettingsWindow
 from kda_window import KDAWindow
 from menu_window import MenuWindow
+from draft_window import DraftWindow
 
 # ── Глобальный хоткей через keyboard ──
 try:
@@ -62,6 +63,7 @@ if __name__ == "__main__":
     overlay = create_overlay()
     purchases = PurchaseWindow()
     kda = KDAWindow()
+    draft = DraftWindow()
 
     if cfg["overlay"]["enabled"]:
         overlay.show()
@@ -74,6 +76,13 @@ if __name__ == "__main__":
     #  Меню
     # ─────────────────────────────────────────
     menu = MenuWindow()
+
+    def open_draft():
+        draft.show()
+        draft.raise_()
+        draft.activateWindow()
+
+    menu.open_draft.connect(open_draft)
 
     menu.toggle_overlay.connect(
         lambda v: overlay.show() if v else overlay.hide()

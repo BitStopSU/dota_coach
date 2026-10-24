@@ -31,6 +31,7 @@ DEFAULTS = {
     },
     "blocks": {
         "timings": True,
+        "game_events": True,
         "threats": True,
         "general": True,
     },
@@ -48,7 +49,7 @@ DEFAULTS = {
     },
     "ai": {
         "provider": "deepseek",
-        "deepseek_api_key": "sk-aef10865c1e54bb8b6f54cba1aca27b2",
+        "deepseek_api_key": "",
         "deepseek_model": "deepseek-chat",
         "deepseek_base_url": "https://api.deepseek.com",
         "gemini_api_key": "",

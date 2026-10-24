@@ -11,6 +11,7 @@ import tts
 
 
 class MenuWindow(QWidget):
+    open_draft = pyqtSignal()
     toggle_overlay = pyqtSignal(bool)
     toggle_purchase = pyqtSignal(bool)
     toggle_kda = pyqtSignal(bool)
@@ -92,6 +93,10 @@ class MenuWindow(QWidget):
         hint = QLabel("Нажми Del (или свою клавишу) — открыть / закрыть меню")
         hint.setStyleSheet("color: #888; font-size: 10px; padding-bottom: 6px;")
         root.addWidget(hint)
+
+        draft_button = QPushButton("Открыть помощник драфта")
+        draft_button.clicked.connect(self.open_draft.emit)
+        root.addWidget(draft_button)
 
         # ── Оверлей подсказок ──
         ov_group = QGroupBox("Окно подсказок (COACH)")
@@ -202,6 +207,10 @@ class MenuWindow(QWidget):
         self.cb_timings = QCheckBox("Тайминги предметов")
         self.cb_timings.setChecked(cfg["blocks"]["timings"])
         blocks_layout.addWidget(self.cb_timings)
+
+        self.cb_game_events = QCheckBox("Тайминги игровых событий")
+        self.cb_game_events.setChecked(cfg["blocks"]["game_events"])
+        blocks_layout.addWidget(self.cb_game_events)
 
         self.cb_threats = QCheckBox("Угрозы врага")
         self.cb_threats.setChecked(cfg["blocks"]["threats"])
@@ -329,6 +338,7 @@ class MenuWindow(QWidget):
         cfg["kda_window"]["opacity"] = self.sl_kda_op.value() / 100
 
         cfg["blocks"]["timings"] = self.cb_timings.isChecked()
+        cfg["blocks"]["game_events"] = self.cb_game_events.isChecked()
         cfg["blocks"]["threats"] = self.cb_threats.isChecked()
         cfg["blocks"]["general"] = self.cb_general.isChecked()
 
